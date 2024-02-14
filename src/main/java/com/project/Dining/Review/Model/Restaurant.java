@@ -23,10 +23,14 @@ public class Restaurant {
     @Column(name = "OVERALL_SCORE")
     private Double overallScore;
 
-    public Restaurant(Double peanutScore, Double eggScore, Double dairyScore) {
+    @Column(name = "ZIPCODE")
+    private String zipCode;
+
+    public Restaurant(Double peanutScore, Double eggScore, Double dairyScore, String zipCode) {
         this.peanutScore = peanutScore;
         this.eggScore = eggScore;
         this.dairyScore = dairyScore;
+        this.zipCode = zipCode;
         this.calculateOverallScore();
     }
 

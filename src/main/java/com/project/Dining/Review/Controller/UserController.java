@@ -2,9 +2,10 @@ package com.project.Dining.Review.Controller;
 
 import com.project.Dining.Review.Model.User;
 import com.project.Dining.Review.Repository.UserRepository;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
-
+@RestController
 public class UserController{
 
     public UserRepository userRepository;
@@ -12,12 +13,12 @@ public class UserController{
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
-    public User saveUser(User user){
+@PostMapping("")
+    public User saveUser(@RequestBody User user){
         return userRepository.save(user);
     }
-
-    public User updateUser(String id, User user){
+@PutMapping("/{id}")
+    public User updateUser(@PathVariable String id, @RequestBody User user){
         var optionalUser = userRepository.findById(id);
         if(optionalUser.isEmpty()){return null;}
 
@@ -32,8 +33,8 @@ public class UserController{
 
         return  userRepository.save(updatedUser);
     }
-
-    public Optional<User> getByUserId(String id){
+@GetMapping("/{id}")
+    public Optional<User> getByUserId(@PathVariable String id){
         return userRepository.findById(id);
     }
     public boolean existsByDisplayName(String displayName) {

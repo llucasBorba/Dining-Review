@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface RestaurantRepository extends CrudRepository<Restaurant,Long> {
 
-    public List<Restaurant> findRestaurantsByZipCodeAndDairyScoreIsNotEmpty(String zipCode);
-    public List<Restaurant> findRestaurantsByZipCodeAndEggScoreIsNotEmpty(String zipCode);
-    public List<Restaurant> findRestaurantsByZipCodeAndPeanutScoreIsNotEmpty(String zipCode);
+    public List<Restaurant> findRestaurantsByZipCodeAndDairyScoreIsNotNull(String zipCode);
+    public List<Restaurant> findRestaurantsByZipCodeAndEggScoreIsNotNull(String zipCode);
+    public List<Restaurant> findRestaurantsByZipCodeAndPeanutScoreIsNotNull(String zipCode);
 
 
 }

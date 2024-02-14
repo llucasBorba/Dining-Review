@@ -1,15 +1,20 @@
 package com.project.Dining.Review.Model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 
 @Entity
+@Data
 @Table(name = "RESTAURANT")
 public class Restaurant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "NAME")
+    private String name;
 
     @Column(name ="PEANUT_SCORE")
     private Double peanutScore;
@@ -26,11 +31,12 @@ public class Restaurant {
     @Column(name = "ZIPCODE")
     private String zipCode;
 
-    public Restaurant(Double peanutScore, Double eggScore, Double dairyScore, String zipCode) {
+    public Restaurant(Double peanutScore, Double eggScore, Double dairyScore, String zipCode, String name) {
         this.peanutScore = peanutScore;
         this.eggScore = eggScore;
         this.dairyScore = dairyScore;
         this.zipCode = zipCode;
+        this.name = name;
         this.calculateOverallScore();
     }
 
@@ -60,41 +66,6 @@ public class Restaurant {
         } else {
             overallScore = null;
         }
-    }
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Double getPeanutScore() {
-        return peanutScore;
-    }
-
-    public void setPeanutScore(Double peanutScore) {
-        this.peanutScore = peanutScore;
-    }
-
-    public Double getEggScore() {
-        return eggScore;
-    }
-
-    public void setEggScore(Double eggScore) {
-        this.eggScore = eggScore;
-    }
-
-    public Double getDairyScore() {
-        return dairyScore;
-    }
-
-    public void setDairyScore(Double dairyScore) {
-        this.dairyScore = dairyScore;
-    }
-
-    public Double getOverallScore() {
-        return overallScore;
     }
 
 }

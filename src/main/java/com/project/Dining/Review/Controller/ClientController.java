@@ -1,25 +1,26 @@
 package com.project.Dining.Review.Controller;
 
-import com.project.Dining.Review.Model.User;
-import com.project.Dining.Review.Repository.UserRepository;
+import com.project.Dining.Review.Model.Client;
+import com.project.Dining.Review.Repository.ClientRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 @RestController
-public class UserController{
+@RequestMapping("/Client")
+public class ClientController {
 
-    public UserRepository userRepository;
+    public ClientRepository clientRepository;
 
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public ClientController(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
     }
 @PostMapping("")
-    public User saveUser(@RequestBody User user){
-        return userRepository.save(user);
+    public Client saveUser(@RequestBody Client user){
+        return clientRepository.save(user);
     }
 @PutMapping("/{id}")
-    public User updateUser(@PathVariable String id, @RequestBody User user){
-        var optionalUser = userRepository.findById(id);
+    public Client updateUser(@PathVariable String id, @RequestBody Client user){
+        var optionalUser = clientRepository.findById(id);
         if(optionalUser.isEmpty()){return null;}
 
         var updatedUser = optionalUser.get();
@@ -31,14 +32,14 @@ public class UserController{
         if(user.getInterestedInEggAllergies() != null){updatedUser.setInterestedInEggAllergies(user.getInterestedInEggAllergies());}
         if(user.getInterestedInDairyAllergies() != null){updatedUser.setInterestedInDairyAllergies(user.getInterestedInDairyAllergies());}
 
-        return  userRepository.save(updatedUser);
+        return  clientRepository.save(updatedUser);
     }
 @GetMapping("/{id}")
-    public Optional<User> getByUserId(@PathVariable String id){
-        return userRepository.findById(id);
+    public Optional<Client> getByUserId(@PathVariable String id){
+        return clientRepository.findById(id);
     }
     public boolean existsByDisplayName(String displayName) {
-        Optional<User> userOptional = userRepository.findById(displayName);
+        Optional<Client> userOptional = clientRepository.findById(displayName);
         return userOptional.isPresent();
     }
 }

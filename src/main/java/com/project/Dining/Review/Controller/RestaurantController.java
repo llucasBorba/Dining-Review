@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/restaurants")
 public class RestaurantController {
 
     public RestaurantRepository restaurantRepository;
@@ -18,15 +19,10 @@ public class RestaurantController {
 
     @PostMapping("")
     public Restaurant saveRestaurant(@RequestBody Restaurant restaurant){
-
-        long id = restaurant.getId();
-        if(restaurantRepository.findById(id).isEmpty()) return null;
-
         return restaurantRepository.save(restaurant);
-
     }
 
-    @GetMapping("")
+    @GetMapping("/{id}")
     public String restaurantDetails(@PathVariable Long id){
         var optionalRestaurant = restaurantRepository.findById(id);
         if(optionalRestaurant.isEmpty()) return null;
@@ -35,21 +31,22 @@ public class RestaurantController {
         return restaurant.toString();
     }
 
-    @GetMapping("")
+    @GetMapping("/by-zip/{zipCode}")
     public List<Restaurant> findByZipCodeAndAllergiesNotEmpty(@PathVariable String zipCode){
 
-        if(!restaurantRepository.findRestaurantsByZipCodeAndPeanutScoreIsNotEmpty(zipCode).isEmpty()){
-        return restaurantRepository.findRestaurantsByZipCodeAndPeanutScoreIsNotEmpty(zipCode);}
+        if(!restaurantRepository.findRestaurantsByZipCodeAndPeanutScoreIsNotNull(zipCode).isEmpty()){
+        return restaurantRepository.findRestaurantsByZipCodeAndPeanutScoreIsNotNull(zipCode);}
 
-        if(!restaurantRepository.findRestaurantsByZipCodeAndEggScoreIsNotEmpty(zipCode).isEmpty()){
-            return restaurantRepository.findRestaurantsByZipCodeAndEggScoreIsNotEmpty(zipCode);}
+        if(!restaurantRepository.findRestaurantsByZipCodeAndEggScoreIsNotNull(zipCode).isEmpty()){
+            return restaurantRepository.findRestaurantsByZipCodeAndEggScoreIsNotNull(zipCode);}
 
-        if(!restaurantRepository.findRestaurantsByZipCodeAndDairyScoreIsNotEmpty(zipCode).isEmpty()){
-        return restaurantRepository.findRestaurantsByZipCodeAndDairyScoreIsNotEmpty(zipCode);}
-
-
+        if(!restaurantRepository.findRestaurantsByZipCodeAndDairyScoreIsNotNull(zipCode).isEmpty()){
+        return restaurantRepository.findRestaurantsByZipCodeAndDairyScoreIsNotNull(zipCode);}
 
         return new ArrayList<>();
-
+    }
+@GetMapping("")
+    public Iterable<Restaurant> getRestaurants(){
+        return restaurantRepository.findAll();
     }
 }

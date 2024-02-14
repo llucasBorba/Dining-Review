@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "USER")
+@Table(name = "CLIENT")
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class Client {
 
     @Id
     private String id;

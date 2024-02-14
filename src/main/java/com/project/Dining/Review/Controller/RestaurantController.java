@@ -2,10 +2,12 @@ package com.project.Dining.Review.Controller;
 
 import com.project.Dining.Review.Model.Restaurant;
 import com.project.Dining.Review.Repository.RestaurantRepository;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@RestController
 public class RestaurantController {
 
     public RestaurantRepository restaurantRepository;
@@ -14,7 +16,8 @@ public class RestaurantController {
         this.restaurantRepository = restaurantRepository;
     }
 
-    public Restaurant saveRestaurant(Restaurant restaurant){
+    @PostMapping("")
+    public Restaurant saveRestaurant(@RequestBody Restaurant restaurant){
 
         long id = restaurant.getId();
         if(restaurantRepository.findById(id).isEmpty()) return null;
@@ -23,7 +26,8 @@ public class RestaurantController {
 
     }
 
-    public String restaurantDetails(Long id){
+    @GetMapping("")
+    public String restaurantDetails(@PathVariable Long id){
         var optionalRestaurant = restaurantRepository.findById(id);
         if(optionalRestaurant.isEmpty()) return null;
         var restaurant = optionalRestaurant.get();
@@ -31,7 +35,8 @@ public class RestaurantController {
         return restaurant.toString();
     }
 
-    public List<Restaurant> findByZipCodeAndAllergiesNotEmpty(String zipCode){
+    @GetMapping("")
+    public List<Restaurant> findByZipCodeAndAllergiesNotEmpty(@PathVariable String zipCode){
 
         if(!restaurantRepository.findRestaurantsByZipCodeAndPeanutScoreIsNotEmpty(zipCode).isEmpty()){
         return restaurantRepository.findRestaurantsByZipCodeAndPeanutScoreIsNotEmpty(zipCode);}
